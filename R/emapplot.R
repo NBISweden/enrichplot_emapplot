@@ -175,7 +175,8 @@ emapplot.enrichResult <- function(x,
                                   node_label  = "category",     
                                   with_edge = TRUE,                 # removed
                                   group_category = FALSE,            # removed
-                                  group_legend = FALSE,              # removed                      
+                                  group_legend = FALSE,              # removed
+                                  group_label = NULL,            # Yuan added this for customizing group names
                                   cex_label_group = 1,           # removed
                                   nWords = 4,                    # removed
                                   label_format = 30,              # removed
@@ -402,6 +403,12 @@ emapplot.enrichResult <- function(x,
     ## add group label
     if (node_label == "all" || node_label == "group") {   
         label_location <- get_label_location(ggData = ggData, label_format = label_format)
+        ## Yuan added below for customizing group names:
+        if (length(group_label)>0) {
+            if (length(group_label)==nrow(label_location)){
+                      label_location$label = group_label
+            }
+          }
         p <- add_group_label(label_style = label_style, repel = repel, shadowtext = shadowtext, p = p,
             label_location = label_location, label_group = label_group,
             cex_label_group = cex_label_group)
